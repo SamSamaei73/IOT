@@ -1,14 +1,14 @@
 const express = require("express");
 const { EventHubConsumerClient } = require("@azure/event-hubs");
 const app = express();
-// const path = require("path");
 const sampleData = { temperature: 25, humidity: 60 };
+const cors = require("cors"); // Import the cors middleware
 
 const connectionString =
   "Endpoint=sb://iothub-ns-newiot007-59030881-6c1f50ab4a.servicebus.windows.net/;SharedAccessKeyName=iothubowner;SharedAccessKey=8EAsF8CfiFq/RoWBi2YpomRh3iOkq0atEAIoTB0mHDI=;EntityPath=newiot007";
 const consumerClient = new EventHubConsumerClient("$Default", connectionString);
 
-// app.use(express.static(path.join(__dirname, "public")));
+let latestEventData = sampleData; // Initialize with sample data
 
 consumerClient.subscribe({
   processEvents: async (events, context) => {
@@ -17,6 +17,7 @@ consumerClient.subscribe({
       console.log(
         `Humidity: '${eventData.humidity}' Temperature: '${eventData.temperature}' from: '${eventData.deviceId}'`
       );
+      latestEventData = eventData; // Update latest event data
       // Process the event data here
     }
   },
@@ -25,15 +26,12 @@ consumerClient.subscribe({
   },
 });
 
-// Endpoint to retrieve IoT data
+// Use cors middleware
+app.use(cors());
+// Endpoint to retrieve latest IoT data
 app.get("/data", (req, res) => {
-  // You can return the IoT data here
-  res.json(sampleData); // Return IoT data as JSON object
+  res.json(latestEventData); // Return latest IoT data as JSON object
 });
-
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "public", "index.html"));
-// });
 
 // Start the server
 const port = process.env.PORT || 3001;

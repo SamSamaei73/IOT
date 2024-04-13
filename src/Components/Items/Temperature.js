@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../Scss/Main.scss";
 import "../../Scss/Button.scss";
 // import ComponentTemperature from "./FetchedData";
 // import ComponentHumidity from "./FetchedData";
-import data from "./FetchedData";
 
 const Temperature = () => {
-  // console.log(ComponentTemperature);
+  const [data, setData] = useState({ temperature: null, humidity: null });
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/data");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const jsonData = await response.json();
+      setData(jsonData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   return (
     <div className="tempr" style={{ width: "21rem" }}>
       <div className="temp">
@@ -16,8 +32,8 @@ const Temperature = () => {
               <span className="sha_temp">
                 <span>
                   <span className="temp-data">
-                    {data} <sup>°C</sup>{" "}
-                    {/* <ComponentTemperature/> */}
+                    {Math.round(data.temperature)} <sup>C</sup>
+                    {/* {<ComponentTemperature key={"temperature"} />} */}
                   </span>
                   <span className="temp-info">
                     <i className="fa fa-snowflake-o"></i> Temperature
@@ -27,8 +43,9 @@ const Temperature = () => {
               <span className="sha_temp">
                 <span>
                   <span className="temp-data">
-                    {/* {<ComponentHumidity />} */}
-                    40 <sup>%</sup>{" "}
+                    {Math.round(data.humidity)}
+                    <sup>%</sup>
+                    {/* 40 <sup>%</sup>{" "} */}
                   </span>
                   <span className="temp-info">
                     <i className="fa fa-snowflake-o"></i> Humidity

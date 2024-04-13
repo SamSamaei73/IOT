@@ -19,20 +19,19 @@ function FetchedData() {
       console.error("Error fetching data:", error);
     }
   };
-
-  return data;
-  // <div>
-  //   <ComponentTemperature data={data} />
-  //   {/* <ComponentHumidity humidity={data.humidity} /> */}
-  // </div>
+  return (
+    <>
+      <ComponentTemperature temperature={data.temperature} />
+      <ComponentHumidity humidity={data.humidity} />
+    </>
+  );
 }
 
-function ComponentTemperature({ data }) {
-  return <div>{[data.temperature, data.humidity]}</div>;
+function ComponentTemperature({ temperature }) {
+  return Math.round(temperature);
 }
 
-// function ComponentHumidity({ humidity }) {
-//   return <div>{Math.round(humidity)}</div>;
-// }
-
+function ComponentHumidity({ humidity }) {
+  return <div>{Math.round(humidity)}</div>;
+}
 export default FetchedData;

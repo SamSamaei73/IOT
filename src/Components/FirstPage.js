@@ -6,7 +6,8 @@ import Temperature from "./Items/Temperature";
 import Lights from "./Items/Lights";
 import Motion from "./Items/Motion";
 import Header from "./Items/Header";
-
+// import IoTData from "./IoTData";
+// import FecthedData from "./Items/FetchedData";
 
 const FirstPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,10 +40,11 @@ const FirstPage = () => {
       <div className="shadow">
 
         <Header/>
+        {/* <IoTData/> */}
         <Temperature/>
         <Lights/>
         <Motion/>
-
+        {/* <FecthedData/> */}
         
 
 

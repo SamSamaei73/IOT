@@ -1,19 +1,23 @@
 import React from "react";
 import "../../Scss/Main.scss";
 import "../../Scss/Button.scss";
+// import ComponentTemperature from "./FetchedData";
+// import ComponentHumidity from "./FetchedData";
+import data from "./FetchedData";
 
 const Temperature = () => {
+  // console.log(ComponentTemperature);
   return (
     <div className="tempr" style={{ width: "21rem" }}>
       <div className="temp">
-        <section id="sha_temp_body" class="col-12">
-          <div class="row">
+        <section id="sha_temp_body" className="col-12">
+          <div className="row">
             <div className="col-12">
               <span className="sha_temp">
                 <span>
                   <span className="temp-data">
-                    {" "}
-                    16 <sup>&deg;C</sup>{" "}
+                    {data} <sup>°C</sup>{" "}
+                    {/* <ComponentTemperature/> */}
                   </span>
                   <span className="temp-info">
                     <i className="fa fa-snowflake-o"></i> Temperature
@@ -23,7 +27,7 @@ const Temperature = () => {
               <span className="sha_temp">
                 <span>
                   <span className="temp-data">
-                    {" "}
+                    {/* {<ComponentHumidity />} */}
                     40 <sup>%</sup>{" "}
                   </span>
                   <span className="temp-info">

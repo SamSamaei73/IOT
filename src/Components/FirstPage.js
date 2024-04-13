@@ -13,42 +13,32 @@ const FirstPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
-
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
-    console.log('check', isChecked)
+    console.log("check", isChecked);
   };
 
-
- 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(1);
-    }, 2000); 
+    }, 2000);
 
-    return () => clearTimeout(timer); 
-  }, []); 
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="FirstPage">
-      
-      {isVisible == 1 ?null:<div className="waiting">
-         <img src={Wait} alt="" />
-       </div>}
-       
-    
+      {isVisible == 1 ? null : (
+        <div className="waiting">
+          <img src={Wait} alt="" />
+        </div>
+      )}
+
       <div className="shadow">
-
-        <Header/>
-        {/* <IoTData/> */}
-        <Temperature/>
-        <Lights/>
-        <Motion/>
-        {/* <FecthedData/> */}
-        
-
-
-        
+        <Header />
+        <Temperature />
+        <Lights />
+        <Motion />
       </div>
     </div>
   );

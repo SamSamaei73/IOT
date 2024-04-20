@@ -121,6 +121,7 @@
             width:15rem;
         }
     }
+    
     .shadow{
         width: 100%;
         padding: 2rem;
@@ -141,48 +142,253 @@
             align-items:center;
             justify-content: space-between;
             padding: 0 2rem;
+            color: white;
+
             img {
                 width: 2rem;
+                cursor: pointer;
             }
-
-        }
-
-        .tempr{
-            width: 15rem;
-            height: 20rem;
-            background-color: white;
-            margin: 1rem;
-            border-radius: 20px;
+        .MainBtn{
+            width: 9rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            position: relative;
-            padding: 2rem;
-            box-shadow: 30px 30px 30px -10px rgba(0,0,0,0.1),
-                     -30px -30px 30px -10px rgba(255,255,255,0.4),
-                     -0.5px -0.5px 0 rgba(255,255,255,1),
-                     0.5px 0.5px 0 rgba(0,0,0,0.02);
+            justify-content: space-between;
             h4{
-                position: absolute;
-                top: 10rem;
+                color: white;
             }
         }
 
-        .temp{
-            
+        }
+        .Box-Item{
+            width: 100%;
             @include Center;
-            position: absolute;
-            margin-bottom: 2rem;
-            flex-direction: column;
-            width: 90%;
-            height: 60%;
-            top: 0;
+            flex-wrap: wrap;
 
-            .Sun{
-                width: 7rem;
-               
+        
+            .tempr{
+                width: 15rem;
+                height: 20rem;
+                background-color: white;
+                margin: 1rem;
+                border-radius: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                position: relative;
+                padding: 2rem;
+                box-shadow: 30px 30px 30px -10px rgba(0,0,0,0.1),
+                         -30px -30px 30px -10px rgba(255,255,255,0.4),
+                         -0.5px -0.5px 0 rgba(255,255,255,1),
+                         0.5px 0.5px 0 rgba(0,0,0,0.02);
+                h4{
+                    position: absolute;
+                    top: 10rem;
+                }
             }
+    
+            .temp{
+                
+                @include Center;
+                position: absolute;
+                margin-bottom: 2rem;
+                flex-direction: column;
+                width: 90%;
+                height: 60%;
+                top: 0;
+    
+                .Sun{
+                    width: 7rem;
+                   
+                }
+            }
+        }
+
+    }
+}
+
+
+.VideoTable{
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    @include Center;
+    padding: 1rem;
+    background: url(../Images/2.jpeg) no-repeat center center/cover;
+
+    .waiting{
+        width: 100%;
+        min-height: 100vh;
+        background-color: #000000b6;
+        position: absolute;
+        z-index: 33;
+        @include Center;
+        img{
+            width:15rem;
         }
     }
+    
+    .shadow{
+        width: 100%;
+        padding: 2rem;
+        min-height: 100vh;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.729);    
+        height: 100%;
+        flex-wrap: wrap;
+        @include Center;
+        position: relative;
+
+        table{
+            border: 2px solid white;
+            border-radius: 10px;
+            width: 90%;
+            text-align: center;
+            color: white;
+            th , td{
+                border: 1px solid white;
+                height: 2rem;
+
+            }
+            th{
+                background-color: rgba(255, 255, 255, 0.278);
+            }
+            td{
+                &:hover{
+                    background-color: white;
+                    color: black;
+                }
+            }
+
+        }
+
+        .Header{
+            width: 100%;
+            height: 5rem;
+            position: absolute;
+            top: 10px;
+            display: flex;
+            align-items:center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            img {
+                width: 2rem;
+                cursor: pointer;
+            }
+            h2{
+                color: white;
+            }
+        .MainBtn{
+            width: 6rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        }}
+}
+
+
+@media (max-width: 750px) {
+    .Login{
+        padding: 0rem;
+        .shadow{
+            height: 100%;
+            position: absolute;
+
+
+            padding: 3rem 0 1rem 0;
+            align-items: center;
+            flex-direction: column;
+            justify-content: flex-start;
+            img {
+                width: 12rem;
+            }
+    
+        }
+    }   
+    .FirstPage{
+        padding: 0rem;
+        height: 100%;
+        position: relative;
+    
+        .waiting{
+            width: 100%;
+            height: 100% !important;
+            min-height: 0;
+            position: absolute;
+            z-index: 33;
+            img{
+                width:10rem;
+                margin-bottom: 30rem;
+            }
+        }
+        .shadow{
+            width: 100%;
+            padding: 0rem;
+            height: 100%;
+            position: absolute;
+            margin-top: 0rem;
+    
+            .Header{
+                width: 100%;
+                height: 5rem;
+                position: absolute;
+                top: 10px;
+                display: flex;
+                align-items:center;
+                justify-content: space-between;
+                padding: 0 2rem;
+                img {
+                    width: 2rem;
+                }
+    
+            }
+    
+            .Box-Item{
+                width: 100%;
+                @include Center;
+                flex-wrap: wrap;
+                padding-top: 5rem;
+    
+            
+                .tempr{
+                    width: 100% !important;
+                    height: 15rem;
+                    background-color: white;
+                    margin: 1rem;
+                    border-radius: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    position: relative;
+                    padding: 0rem;
+                    box-shadow: 30px 30px 30px -10px rgba(0,0,0,0.1),
+                             -30px -30px 30px -10px rgba(255,255,255,0.4),
+                             -0.5px -0.5px 0 rgba(255,255,255,1),
+                             0.5px 0.5px 0 rgba(0,0,0,0.02);
+                    h4{
+                        position: absolute;
+                        top: 8.5rem;
+                    }
+                }
+        
+                .temp{
+                    
+                    @include Center;
+                    position: absolute;
+                    margin-bottom: 2rem;
+                    flex-direction: column;
+                    width: 90%;
+                    height: 60%;
+                    top: 0;
+        
+                    .Sun{
+                        width: 7rem;
+                       
+                    }
+                }
+            }
+        }
+    } 
 }

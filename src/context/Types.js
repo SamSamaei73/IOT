@@ -1,0 +1,5 @@
+
+export const GET_INFO_SUCCESS = "GET_INFO_SUCCESS";
+export const GET_INFO_FAIL = "GET_INFO_FAIL";
+export const GET_ALL_INFO_SUCCESS = "GET_ALL_INFO_SUCCESS";
+export const GET_ALL_INFO_FAIL = "GET_ALL_INFO_FAIL";

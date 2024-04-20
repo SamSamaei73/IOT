@@ -1,12 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import "../../Scss/Main.scss";
 import "../../Scss/Button.scss";
 import safe from "../../Images/safe.png";
 import Danger from "../../Images/32.png";
+import EnergyContext from "../../context/EnergyContext";
+
+function useEffectSkipFirst(fn, arr) {
+  const isFirst = useRef(true);
+  useEffect(() => {
+    if (isFirst.current) {
+      isFirst.current = false;
+      return;
+    }
+    fn();
+  }, arr);
+}
 
 const Lights = () => {
+  const energyContext = useContext(EnergyContext);
+  const { GetInfo, informationGet } = energyContext;
   const [isVisible, setIsVisible] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [Buzzer, setBuzzer] = useState([]);
+
+  useEffect(() => {
+    GetInfo();
+  }, []);
+
+  useEffectSkipFirst(() => {
+    if (informationGet) {
+      setBuzzer(informationGet.buzzer);
+    }
+  }, [informationGet]);
+
+  useEffect(() => {
+    if (Buzzer === 1) {
+      setIsChecked(true);
+    } else {
+      setIsChecked(false);
+    }
+  }, [Buzzer]);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);

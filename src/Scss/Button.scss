@@ -168,9 +168,7 @@
       box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
                   inset -4px -4px 6px -1px rgba(255,255,255,0.7);
   }
-  /** End Section Body 1 Style **/
-  
-  /** Start Section Body 2 Style **/
+
   #sha_temp_meta
   {
       margin-top: 30px;
@@ -221,11 +219,24 @@
                 0px 12px 10px -10px rgba(0,0,0,0.05);
     border: 1px solid rgba(0,0,0,0.01);
 }
-/** End Section Button List Style **/
 
-/** Start Section Body 1 Style **/
 #sha_temp_body
 {
     text-align: center;
     margin-top: 30px;
+}
+
+
+
+@media (max-width: 750px) {
+
+  .toggle {
+    --color: chartreuse;
+    appearance: none;
+    position: absolute;
+    bottom: 1rem;
+   
+  
+  }
+  
 }

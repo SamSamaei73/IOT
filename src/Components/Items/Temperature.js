@@ -16,7 +16,8 @@ function useEffectSkipFirst(fn, arr) {
 
 const Temperature = () => {
   const energyContext = useContext(EnergyContext);
-  const { GetInfo, informationGet } = energyContext;
+  const { GetInfo, informationGet, sendDataByClick, PostButton } =
+    energyContext;
   const [Datahumidity, setDatahumidity] = useState([]);
   const [Temp, setTemp] = useState([]);
   const [FanSet, setFanSet] = useState([]);
@@ -24,29 +25,43 @@ const Temperature = () => {
 
   useEffect(() => {
     GetInfo();
+    const interval = setInterval(() => {
+      GetInfo();
+    }, 5000); 
+
+    return () => clearInterval(interval); // Clean up the interval on component unmount
   }, []);
 
   useEffectSkipFirst(() => {
     if (informationGet) {
-      console.log("mohtava", informationGet);
-      const temperatureFirstTwo = informationGet.temperature.substring(0, 2);
-      const humidityFirstTwo = informationGet.humidity.substring(0, 2);
-      setTemp(temperatureFirstTwo);
-      setDatahumidity(humidityFirstTwo);
+      setTemp(informationGet.temperature);
+      setDatahumidity(informationGet.humidity);
       setFanSet(informationGet.fan);
+
     }
+    console.log('datayi', informationGet)
   }, [informationGet]);
 
+
   useEffect(() => {
-    if (FanSet === 1) {
-      setIsChecked(true);
-    } else {
-      setIsChecked(false);
-    }
+    const fanState = FanSet ===  true;
+    setIsChecked(fanState);
   }, [FanSet]);
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+    const newValue = !isChecked;
+    setIsChecked(newValue);
+    const valueToSend = newValue ? 1 : 0;
+    SendInfo("fan", valueToSend);
+  };
+
+  const SendInfo = (name, value) => {
+    const payload = {
+      name: name,
+      value: value,
+    };
+    PostButton(payload);
+    console.log("testi", payload);
   };
 
   return (
@@ -84,6 +99,7 @@ const Temperature = () => {
       </div>
       <input
         type="checkbox"
+        name="fan"
         role="switch"
         className="toggle"
         checked={isChecked}

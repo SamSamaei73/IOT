@@ -11,7 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   function LoginSet(pass, user) {
-    if (pass == "wiki" && user == "friend") {
+    if (pass == "cloud" && user == "blacksam") {
       setLogin(1);
       navigate("/Dashboard");
       console.log("state true");

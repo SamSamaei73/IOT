@@ -18,7 +18,7 @@ function useEffectSkipFirst(fn, arr) {
 
 const Lights = () => {
   const energyContext = useContext(EnergyContext);
-  const { GetInfo, informationGet } = energyContext;
+  const { GetInfo, informationGet, PostButton } = energyContext;
   const [isVisible, setIsVisible] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [LightSet, setLightSet] = useState([]);
@@ -26,25 +26,39 @@ const Lights = () => {
 
   useEffect(() => {
     GetInfo();
+    const interval = setInterval(() => {
+      GetInfo();
+    }, 5000); // Refresh every 4 seconds
+
+    return () => clearInterval(interval); // Clean up the interval on component unmount
   }, []);
 
   useEffectSkipFirst(() => {
     if (informationGet) {
       setLightSet(informationGet.lights);
-      setLightInt(informationGet.light_intensity.substring(0, 2));
+      setLightInt(informationGet.light_intensity);
     }
   }, [informationGet]);
 
   useEffect(() => {
-    if (LightSet === 1) {
-      setIsChecked(true);
-    } else {
-      setIsChecked(false);
-    }
+    const fanState = LightSet === true;
+    setIsChecked(fanState);
   }, [LightSet]);
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+    const newValue = !isChecked;
+    setIsChecked(newValue);
+    const valueToSend = newValue ? 1 : 0;
+    SendInfo("light", valueToSend);
+  };
+
+  const SendInfo = (name, value) => {
+    const payload = {
+      name: name,
+      value: value,
+    };
+    PostButton(payload);
+    console.log("testi", payload);
   };
 
   useEffect(() => {
@@ -67,8 +81,8 @@ const Lights = () => {
                     {LightInt}
                     <sup>%</sup>{" "}
                   </span>
-                  <span style={{fontSize:'10px'}} className="temp-info">
-                    <i  className="fa fa-snowflake-o"></i> Light Intensity
+                  <span style={{ fontSize: "10px" }} className="temp-info">
+                    <i className="fa fa-snowflake-o"></i> Light Intensity
                   </span>
                 </span>
               </span>
@@ -81,6 +95,7 @@ const Lights = () => {
 
       <input
         type="checkbox"
+        name="light"
         role="switch"
         className="toggle"
         checked={isChecked}

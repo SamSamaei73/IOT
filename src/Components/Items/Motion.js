@@ -18,13 +18,18 @@ function useEffectSkipFirst(fn, arr) {
 
 const Lights = () => {
   const energyContext = useContext(EnergyContext);
-  const { GetInfo, informationGet } = energyContext;
+  const { GetInfo, informationGet ,PostButton } = energyContext;
   const [isVisible, setIsVisible] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [Buzzer, setBuzzer] = useState([]);
 
   useEffect(() => {
     GetInfo();
+    const interval = setInterval(() => {
+      GetInfo();
+    }, 5000); // Refresh every 4 seconds
+
+    return () => clearInterval(interval); // Clean up the interval on component unmount
   }, []);
 
   useEffectSkipFirst(() => {
@@ -34,25 +39,29 @@ const Lights = () => {
   }, [informationGet]);
 
   useEffect(() => {
-    if (Buzzer === 1) {
-      setIsChecked(true);
-    } else {
-      setIsChecked(false);
-    }
+    const fanState = Buzzer ===  true;
+    setIsChecked(fanState);
   }, [Buzzer]);
 
+
+
+
+
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-    console.log("check", isChecked);
+    const newValue = !isChecked;
+    setIsChecked(newValue);
+    const valueToSend = newValue ? 1 : 0;
+    SendInfo("buzzer", valueToSend);
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(1);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const SendInfo = (name, value) => {
+    const payload = {
+      name: name,
+      value: value,
+    };
+    PostButton(payload);
+    console.log("testi", payload);
+  };
 
   return (
     <div className="tempr">
@@ -67,11 +76,12 @@ const Lights = () => {
       {isChecked == false ? <h4></h4> : null}
       {isChecked == true ? <h4 style={{ color: "red" }}>Danger!</h4> : null}
       <input
-        type="checkbox"
-        role="switch"
-        className="toggle"
-        checked={isChecked}
-        onChange={handleCheckboxChange}
+          type="checkbox"
+          name="buzzer"
+          role="switch"
+          className="toggle"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
       />
     </div>
   );

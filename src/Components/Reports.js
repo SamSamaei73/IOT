@@ -2,6 +2,8 @@ import React, { useRef, useState, useContext, useEffect } from "react";
 import "../Scss/Main.scss";
 import Header from "./Items/Header";
 import EnergyContext from "../context/EnergyContext";
+import Chart from './Items/Chart'
+
 
 function useEffectSkipFirst(fn, arr) {
   const isFirst = useRef(true);
@@ -17,7 +19,7 @@ function useEffectSkipFirst(fn, arr) {
 const Reports = () => {
   const energyContext = useContext(EnergyContext);
   const { GetAllInfo, allInformationGet } = energyContext;
-  const [AllDataReport, setAllDataReport] = useState(false);
+  const [AllDataReport, setAllDataReport] = useState([]);
   const [Temp, setATemp] = useState(false);
 
   useEffect(() => {
@@ -26,7 +28,7 @@ const Reports = () => {
 
   useEffectSkipFirst(() => {
     if (allInformationGet && Array.isArray(allInformationGet.data)) {
-      const lastSixItems = allInformationGet.data.slice(-4); // Get the last 6 items
+      const lastSixItems = allInformationGet.data.slice(-6  ); // Get the last 6 items
       let newData = lastSixItems.map((item) => {
         let newItem = {};
         newItem.id = item.id;
@@ -45,9 +47,10 @@ const Reports = () => {
     <div className="VideoTable">
       <div className="shadow">
         <Header HeaderTitle="Reports" />
+        <h2 className="ResTitle"> Reports</h2>
+
         <table>
           <tr>
-            <th>ID</th>
             <th>Date</th>
             <th>Temperature</th>
             <th>Humidity</th>
@@ -57,16 +60,19 @@ const Reports = () => {
           {Array.isArray(AllDataReport) && AllDataReport.length > 0
             ? AllDataReport.map((item) => (
                 <tr>
-                  <td>{item.id}</td>
                   <td>{item.created_at}</td>
                   <td>{item.temperature}</td>
                   <td>{item.humidity}</td>
                   <td>{item.light_intensity}</td>
-                  <td>{item.buzzer}</td>
+                  <td>{item.buzzer == 0 ? <p>Off</p> : <p>On</p>} </td>
                 </tr>
               ))
             : null}
         </table>
+        {/* <div className="Chart_place">
+          <Chart/>
+        </div> */}
+
       </div>
     </div>
   );
